@@ -2,8 +2,8 @@
 # ──────────────────────────────────────────────────────────────────
 # ManageLM Claude Extension — Deploy script
 #
-# Tags, pushes clean project files to GitHub (no internal scripts),
-# and creates a GitHub release with the tarball attached.
+# Tags, pushes to GitHub, and creates a GitHub release with the
+# tarball attached.
 #
 # Prerequisites:
 #   - package.sh has been run (tarball exists)
@@ -55,10 +55,7 @@ if [ -n "$(git diff --name-only HEAD 2>/dev/null)" ]; then
   exit 1
 fi
 
-# Internal files that should NOT be pushed to GitHub
-INTERNAL_FILES="deploy.sh package.sh CLAUDE.md"
-
-# ── Push to origin (Gitea — full repo including scripts) ─────────
+# ── Push to origin (Gitea) ───────────────────────────────────────
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 echo "▸ Pushing to origin..."
 git push origin "$BRANCH" --tags 2>/dev/null || true
@@ -67,23 +64,9 @@ git push origin "$BRANCH" --tags 2>/dev/null || true
 echo "▸ Tagging ${TAG}..."
 git tag -f "$TAG" -m "Release ${VERSION}"
 
-# ── Push to GitHub (history preserved, internal files stripped) ───
-echo "▸ Preparing clean branch for GitHub..."
-CLEAN_BRANCH="_github_release_$$"
-git checkout -b "$CLEAN_BRANCH" --quiet
-
-# Remove internal files from the clean branch
-for f in $INTERNAL_FILES; do
-  git rm -f "$f" --quiet 2>/dev/null || true
-done
-git commit -m "Release ${VERSION}" --quiet --allow-empty
-
+# ── Push to GitHub ───────────────────────────────────────────────
 echo "▸ Pushing to GitHub..."
-git push github "${CLEAN_BRANCH}:main" --tags --force
-
-# ── Cleanup: switch back and delete temp branch ──────────────────
-git checkout "$BRANCH" --quiet
-git branch -D "$CLEAN_BRANCH" --quiet
+git push github "${BRANCH}:main" --tags --force
 
 # ── Delete existing release if re-deploying same version ─────────
 EXISTING=$(curl -s -o /dev/null -w "%{http_code}" \
