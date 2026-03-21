@@ -63,28 +63,27 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 echo "▸ Pushing to origin..."
 git push origin "$BRANCH" --tags 2>/dev/null || true
 
-# ── Create clean orphan branch for GitHub (no history, no scripts) ─
+# ── Tag ──────────────────────────────────────────────────────────
+echo "▸ Tagging ${TAG}..."
+git tag -f "$TAG" -m "Release ${VERSION}"
+
+# ── Push to GitHub (history preserved, internal files stripped) ───
 echo "▸ Preparing clean branch for GitHub..."
 CLEAN_BRANCH="_github_release_$$"
-git checkout --orphan "$CLEAN_BRANCH" --quiet
+git checkout -b "$CLEAN_BRANCH" --quiet
 
 # Remove internal files from the clean branch
 for f in $INTERNAL_FILES; do
   git rm -f "$f" --quiet 2>/dev/null || true
 done
-git commit -m "${PLUGIN_NAME} ${VERSION}" --quiet --allow-empty
+git commit -m "Release ${VERSION}" --quiet --allow-empty
 
-# Tag on the clean branch
-git tag -f "$TAG" -m "Release ${VERSION}"
-
-# Push clean branch as main to GitHub (force — orphan replaces history)
 echo "▸ Pushing to GitHub..."
 git push github "${CLEAN_BRANCH}:main" --tags --force
 
 # ── Cleanup: switch back and delete temp branch ──────────────────
 git checkout "$BRANCH" --quiet
 git branch -D "$CLEAN_BRANCH" --quiet
-git tag -f "$TAG" "$BRANCH" -m "Release ${VERSION}" 2>/dev/null || true
 
 # ── Delete existing release if re-deploying same version ─────────
 EXISTING=$(curl -s -o /dev/null -w "%{http_code}" \
