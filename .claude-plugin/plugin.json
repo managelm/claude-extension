@@ -1,0 +1,21 @@
+{
+  "name": "managelm",
+  "description": "Remote server management through ManageLM — manage Linux servers, run tasks, transfer files, and monitor infrastructure using natural language.",
+  "version": "1.0.0",
+  "author": {
+    "name": "ManageLM",
+    "url": "https://www.managelm.com"
+  },
+  "homepage": "https://www.managelm.com",
+  "repository": "https://github.com/managelm/claude-extension",
+  "license": "MIT",
+  "keywords": [
+    "server-management",
+    "linux",
+    "infrastructure",
+    "devops",
+    "sysadmin",
+    "remote-management",
+    "mcp"
+  ]
+}
