@@ -2,8 +2,8 @@
 # ──────────────────────────────────────────────────────────────────
 # ManageLM Claude Extension — Deploy script
 #
-# Tags, pushes to GitHub with full history, and creates a GitHub
-# release with the tarball attached.
+# Tags, pushes clean project files to GitHub (no internal scripts),
+# and creates a GitHub release with the tarball attached.
 #
 # Prerequisites:
 #   - package.sh has been run (tarball exists)
@@ -55,23 +55,36 @@ if [ -n "$(git diff --name-only HEAD 2>/dev/null)" ]; then
   exit 1
 fi
 
-# ── Tag ──────────────────────────────────────────────────────────
-echo "▸ Tagging ${TAG}..."
-git tag -f "$TAG" -m "Release ${VERSION}"
+# Internal files that should NOT be pushed to GitHub
+INTERNAL_FILES="deploy.sh package.sh CLAUDE.md"
 
-# ── Push to origin (Gitea) ───────────────────────────────────────
+# ── Push to origin (Gitea — full repo including scripts) ─────────
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 echo "▸ Pushing to origin..."
 git push origin "$BRANCH" --tags 2>/dev/null || true
 
-# ── Push to GitHub (without internal files) ──────────────────────
+# ── Create clean orphan branch for GitHub (no history, no scripts) ─
+echo "▸ Preparing clean branch for GitHub..."
+CLEAN_BRANCH="_github_release_$$"
+git checkout --orphan "$CLEAN_BRANCH" --quiet
+
+# Remove internal files from the clean branch
+for f in $INTERNAL_FILES; do
+  git rm -f "$f" --quiet 2>/dev/null || true
+done
+git commit -m "${PLUGIN_NAME} ${VERSION}" --quiet --allow-empty
+
+# Tag on the clean branch
+git tag -f "$TAG" -m "Release ${VERSION}"
+
+# Push clean branch as main to GitHub (force — orphan replaces history)
 echo "▸ Pushing to GitHub..."
-INTERNAL_FILES="CLAUDE.md deploy.sh package.sh"
-git rm --cached $INTERNAL_FILES -f --quiet 2>/dev/null || true
-git commit -m "${PLUGIN_NAME} ${VERSION}" --quiet
-git push github HEAD:main --tags --force
-git reset HEAD~1 --quiet
-git checkout -- $INTERNAL_FILES 2>/dev/null || true
+git push github "${CLEAN_BRANCH}:main" --tags --force
+
+# ── Cleanup: switch back and delete temp branch ──────────────────
+git checkout "$BRANCH" --quiet
+git branch -D "$CLEAN_BRANCH" --quiet
+git tag -f "$TAG" "$BRANCH" -m "Release ${VERSION}" 2>/dev/null || true
 
 # ── Delete existing release if re-deploying same version ─────────
 EXISTING=$(curl -s -o /dev/null -w "%{http_code}" \
