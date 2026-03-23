@@ -19,3 +19,4 @@
 - `.mcp.json` — MCP server configuration.
 - `skills/` — user-invocable skills (setup, troubleshoot).
 - `icon.png` — extension icon.
+- `CHANGELOG.md` — changelog (Keep a Changelog format). Update when releasing.
