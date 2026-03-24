@@ -42,10 +42,10 @@ If specific ManageLM tools are not appearing in Claude's toolkit:
 
 - The MCP connection may not be established. Check `/mcp` status in Claude Code.
 - Run `/reload-plugins` to refresh the plugin and MCP connection.
-- Skills are loaded per-account. Use `available_skills` to see skills not yet imported, and import them from the portal.
+- Skills are loaded per-account. Use `list_available_skills` to see skills not yet imported, and import them from the portal.
 
 ## 5. General Tips
 
-- Use `account_info` to check plan limits and current usage.
+- Use `get_account_info` to check plan limits and current usage.
 - Use `search_agents` to filter agents by health, OS, or status when investigating fleet-wide issues.
 - Token refresh happens automatically. If auth breaks persistently, remove and re-add the MCP server configuration.

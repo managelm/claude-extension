@@ -78,25 +78,31 @@ Each skill accepts a `target` (hostname, group, or `"all"`) and a free-text
 | **files** | File management — read, write, upload, download files (text and binary) |
 | ...and more | Firewall, Docker/Podman, Apache/Nginx, MySQL/PostgreSQL, backup, certificates, git, DNS, VPN, Kubernetes, etc. |
 
-Use `available_skills` to discover additional skills you can import from the
+Use `list_available_skills` to discover additional skills you can import from the
 built-in catalog.
 
-### Discovery & Management Tools
+### Built-in Tools
 
 | Tool | Description |
 |------|-------------|
 | `list_agents` | List all servers with status, OS, health metrics, groups |
-| `agent_info` | Detailed info for a single server: health, skills, recent tasks |
+| `get_agent_info` | Detailed info for a single server: health, skills, recent tasks |
 | `list_agent_skills` | See assigned and available skills for a server |
-| `available_skills` | Discover skills not yet imported into your account |
-| `account_info` | Check account plan, usage limits, and current consumption |
+| `list_available_skills` | Discover skills not yet imported into your account |
+| `get_account_info` | Check account plan, usage limits, and current consumption |
 | `search_agents` | Filter servers by CPU/memory/disk usage, OS, status, or group |
 | `search_inventory` | Search installed packages, running services, containers across all servers |
 | `search_security` | Search security audit findings across all servers |
+| `search_access` | Search SSH keys and sudo privileges across all servers (with identity mapping) |
+| `run_security_audit` | Run a security audit on one or more servers |
+| `run_inventory_scan` | Run an inventory scan on one or more servers |
+| `run_access_scan` | Run an SSH & sudo access scan on one or more servers |
 | `get_task_status` | Check status of a running or completed task |
 | `get_task_history` | Review recent tasks for a server |
-| `task_changes` | View file changes made by a task |
+| `get_task_changes` | View file changes made by a task |
+| `answer_task` | Answer a question from an interactive task |
 | `revert_task` | Revert file changes from a previous task |
+| `send_email` | Send yourself a report or summary email |
 
 ### Targeting
 
