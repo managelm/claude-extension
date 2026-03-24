@@ -13,6 +13,7 @@ All notable changes to the ManageLM Claude extension will be documented in this 
 - Full server management via ~30 skill-based MCP tools: system, packages, services, files, users, network, security, and more.
 - Multi-server targeting by hostname, group, or broadcast to all.
 - File transfer support (text and binary) up to configured limits.
-- Discovery tools: `list_agents`, `agent_info`, `list_agent_skills`, `available_skills`, `account_info`.
-- Task management: `get_task_status`, `get_task_history`, `task_changes`, `revert_task`.
-- Cross-agent search: `search_inventory`, `search_security`, `search_agents`.
+- Discovery tools: `list_agents`, `get_agent_info`, `list_agent_skills`, `list_available_skills`, `get_account_info`.
+- Task management: `get_task_status`, `get_task_history`, `get_task_changes`, `answer_task`, `revert_task`.
+- Cross-agent search: `search_inventory`, `search_security`, `search_agents`, `search_access`.
+- Scans: `run_security_audit`, `run_inventory_scan`, `run_access_scan`.
