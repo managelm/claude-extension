@@ -66,7 +66,8 @@ git tag -f "$TAG" -m "Release ${VERSION}"
 
 # ── Push to GitHub ───────────────────────────────────────────────
 echo "▸ Pushing to GitHub..."
-git push github "${BRANCH}:main" --tags
+# Force required: local master → remote main (different branch names, histories diverge)
+git push github "${BRANCH}:main" --tags --force
 
 # ── Delete existing release if re-deploying same version ─────────
 EXISTING=$(curl -s -o /dev/null -w "%{http_code}" \
