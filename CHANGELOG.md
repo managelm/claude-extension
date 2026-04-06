@@ -6,10 +6,7 @@ All notable changes to the ManageLM Claude extension will be documented in this 
 
 ### Added
 
-- Pentest tools: start/cancel/poll pentests, check credit balance, view test catalog, manage verified domains, view history.
 - Follow-up tasks: continue conversations on completed tasks via the portal's context system.
-- Compliance pentest integration: pentest rule results now feed into compliance framework scores.
-- New webhook events: `report.completed` and `report.failed` for pentest results.
 - Shell task audit trail: tasks now include a `source` field (`portal` or `shell`).
 
 ### Changed
