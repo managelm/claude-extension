@@ -1,7 +1,7 @@
 {
   "name": "managelm",
   "description": "Remote server management through ManageLM — manage Linux servers, run tasks, transfer files, and monitor infrastructure using natural language.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "ManageLM",
     "url": "https://www.managelm.com"
