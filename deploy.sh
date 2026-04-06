@@ -66,8 +66,7 @@ git tag -f "$TAG" -m "Release ${VERSION}"
 
 # ── Push to GitHub ───────────────────────────────────────────────
 echo "▸ Pushing to GitHub..."
-# Force-with-lease: intentional branch mapping (local master → remote main)
-git push github "${BRANCH}:main" --tags --force-with-lease
+git push github "${BRANCH}:main" --tags
 
 # ── Delete existing release if re-deploying same version ─────────
 EXISTING=$(curl -s -o /dev/null -w "%{http_code}" \
