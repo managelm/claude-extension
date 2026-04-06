@@ -48,10 +48,10 @@ else
   git remote set-url github "https://${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git"
 fi
 
-# ── Check for uncommitted changes (tracked files only) ───────────
-if [ -n "$(git diff --name-only HEAD 2>/dev/null)" ]; then
-  echo "ERROR: Uncommitted changes in tracked files. Commit or stash first."
-  git diff --name-only HEAD
+# ── Check for uncommitted or untracked changes ──────────────────
+if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+  echo "ERROR: Uncommitted or untracked changes. Commit or stash first."
+  git status --short
   exit 1
 fi
 
@@ -66,7 +66,8 @@ git tag -f "$TAG" -m "Release ${VERSION}"
 
 # ── Push to GitHub ───────────────────────────────────────────────
 echo "▸ Pushing to GitHub..."
-git push github "${BRANCH}:main" --tags --force
+# Force-with-lease: intentional branch mapping (local master → remote main)
+git push github "${BRANCH}:main" --tags --force-with-lease
 
 # ── Delete existing release if re-deploying same version ─────────
 EXISTING=$(curl -s -o /dev/null -w "%{http_code}" \
