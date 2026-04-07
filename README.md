@@ -1,154 +1,164 @@
-# ManageLM — Claude Code Extension
+<p align="center">
+  <a href="https://www.managelm.com">
+    <img src="https://www.managelm.com/assets/ManageLM.png" alt="ManageLM" height="50">
+  </a>
+</p>
 
-Manage your Linux servers directly from Claude using natural language.
+<h3 align="center">Claude Code Extension</h3>
 
-ManageLM connects Claude to your infrastructure through a secure cloud portal
-and lightweight agents running on your servers. Ask Claude to check system
-status, manage packages, configure services, transfer files, and more — across
-one server or an entire fleet.
+<p align="center">
+  Manage Linux &amp; Windows servers directly from Claude using natural language.
+</p>
 
-## Installation
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-blue" alt="License"></a>
+  <a href="https://www.managelm.com"><img src="https://img.shields.io/badge/website-managelm.com-cyan" alt="Website"></a>
+  <a href="https://www.managelm.com/plugins/claude.html"><img src="https://img.shields.io/badge/docs-full%20documentation-green" alt="Docs"></a>
+  <a href="https://github.com/managelm/claude-extension/releases"><img src="https://img.shields.io/github/v/release/managelm/claude-extension" alt="Release"></a>
+</p>
 
-### From the Marketplace
+<p align="center">
+  <img src="assets/screenshot.png" alt="Claude managing a Linux server — creating users, managing SSH keys" width="600">
+</p>
+
+---
+
+Ask Claude to check system status, manage packages, configure services, transfer files, run security audits, and more — across one server or an entire fleet. The extension connects Claude to your infrastructure through MCP (Model Context Protocol), a secure cloud portal, and lightweight agents running on your servers.
+
+## Features
+
+- **Natural language** — describe tasks in plain English; Claude picks the right skill and parameters
+- **31 built-in skills** — packages, services, firewall, web servers, databases, Docker, certificates, VPN, Kubernetes, and more
+- **Multi-server targeting** — run on a single server, a group, or broadcast to all agents
+- **File transfers** — upload and download files (text and binary) between local and remote
+- **Security audits** — run audits, search findings across your fleet, remediate issues
+- **Task history & revert** — review what changed, inspect diffs, revert any task
+- **Cross-infrastructure search** — find agents by health/OS, search inventory, security findings, SSH keys, sudo rules
+- **Zero inbound ports** — agents connect outbound only; no SSH, no open ports on your servers
+
+## Quick Start
+
+### 1. Install
 
 ```bash
-claude plugin install managelm
+claude mcp add managelm --transport url https://app.managelm.com/mcp
 ```
 
-### From GitHub
-
-```bash
-claude plugin install managelm@your-marketplace
-```
-
-### Local Testing
-
-```bash
-claude --plugin-dir ./path/to/this/directory
-```
-
-### Manual MCP Configuration
-
-Add to your Claude Code settings (`~/.claude/settings.json`) or project
-`.mcp.json`:
+Or add manually to `~/.claude/settings.json`:
 
 ```json
 {
   "mcpServers": {
     "managelm": {
       "type": "url",
-      "url": "https://your-portal.example.com/mcp"
+      "url": "https://app.managelm.com/mcp"
     }
   }
 }
 ```
 
-## Authentication
+### 2. Authenticate
 
-ManageLM uses **OAuth 2.0 with PKCE**. On first connection Claude will open
-your browser to authorize access. You need:
+ManageLM uses **OAuth 2.0 with PKCE**. On first connection, Claude opens your browser to authorize access. You need:
 
-1. A ManageLM account
-2. MCP credentials enabled (Portal > Settings > MCP Credentials)
+1. A [ManageLM account](https://app.managelm.com/register) (free for up to 10 agents)
+2. MCP credentials enabled (Portal > Settings > MCP & API)
 
-Access tokens expire after 30 minutes and are automatically refreshed.
-
-Legacy header-based auth (`X-MCP-Id` / `X-MCP-Secret`) is also supported for
-programmatic use.
-
-## What You Can Do
-
-Once connected, Claude has access to skill-based tools and discovery tools
-covering all aspects of Linux server management.
-
-### Skill-Based Tools
-
-Each skill accepts a `target` (hostname, group, or `"all"`) and a free-text
-`instruction` describing what you want done.
-
-| Skill | Description |
-|-------|-------------|
-| **base** | Core read-only utilities — read files, search content, check system info, monitor resources, network diagnostics |
-| **system** | System administration — OS info, performance tuning, hostname, timezone, kernel parameters, reboot |
-| **packages** | Package management — install, remove, update, search across apt/dnf/yum/pacman/zypper/apk |
-| **services** | Service and process management — systemd units, cron jobs, logs, process control |
-| **users** | User and access management — accounts, groups, SSH keys, sudo, password policies |
-| **network** | Network management — interfaces, routes, DNS, ports, connectivity testing, traffic analysis |
-| **security** | Security hardening — audits, fail2ban, SSH hardening, SELinux/AppArmor, SSL/TLS, auth logs |
-| **files** | File management — read, write, upload, download files (text and binary) |
-| ...and more | Firewall, Docker/Podman, Apache/Nginx, MySQL/PostgreSQL, backup, certificates, git, DNS, VPN, Kubernetes, etc. |
-
-Use `list_available_skills` to discover additional skills you can import from the
-built-in catalog.
-
-### Built-in Tools
-
-| Tool | Description |
-|------|-------------|
-| `list_agents` | List all servers with status, OS, health metrics, groups |
-| `get_agent_info` | Detailed info for a single server: health, skills, recent tasks |
-| `list_agent_skills` | See assigned and available skills for a server |
-| `list_available_skills` | Discover skills not yet imported into your account |
-| `get_account_info` | Check account plan, usage limits, and current consumption |
-| `search_agents` | Filter servers by CPU/memory/disk usage, OS, status, or group |
-| `search_inventory` | Search installed packages, running services, containers across all servers |
-| `search_security` | Search security audit findings across all servers |
-| `search_access` | Search SSH keys and sudo privileges across all servers (with identity mapping) |
-| `run_security_audit` | Run a security audit on one or more servers |
-| `run_inventory_scan` | Run an inventory scan on one or more servers |
-| `run_access_scan` | Run an SSH & sudo access scan on one or more servers |
-| `get_task_status` | Check status of a running or completed task |
-| `get_task_history` | Review recent tasks for a server |
-| `get_task_changes` | View file changes made by a task |
-| `answer_task` | Answer a question from an interactive task |
-| `revert_task` | Revert file changes from a previous task |
-| `send_email` | Send yourself a report or summary email |
-
-### Targeting
-
-Every skill-based tool accepts a `target` parameter:
-
-- **Hostname** — run on a single server (e.g., `web-prod-1`)
-- **Group name** — run on all servers in a group (e.g., `production`)
-- **`"all"`** — broadcast to every server you have access to
-
-## Skills
-
-This extension includes two user-invocable skills:
-
-- `/managelm:setup` — Walk through connecting Claude to your ManageLM portal
-- `/managelm:troubleshoot` — Diagnose connection, agent, or task issues
-
-## Example Usage
+### 3. Use it
 
 ```
-> Check disk usage on web-prod-1
+> Check disk usage on web-prod-01
 
 > Install nginx on all servers in the staging group
 
 > Upload my local config.yml to /etc/myapp/config.yml on db-primary
 
-> Show me the last 50 lines of /var/log/syslog on monitoring-1
+> Run a security audit on all production servers
 
 > Which servers have CPU usage above 80%?
 
-> Search for any security findings related to SSH across all servers
-
-> What packages are installed on web-prod-1 that match "python"?
+> Create a user deploy with my SSH key on web-prod-01
 ```
+
+## Architecture
+
+```
+Claude ── MCP ──> ManageLM Portal ── WebSocket ──> Agent on Server
+                  (cloud control      (outbound       (local LLM,
+                   plane)              only)            skill exec)
+```
+
+Every task dispatched to an agent is cryptographically signed (Ed25519). Agents use a local LLM — your data never leaves your infrastructure.
+
+## Available Skills
+
+| Skill | Description |
+|-------|-------------|
+| `base` | Read-only utilities — files, system info, monitoring, diagnostics |
+| `system` | OS config, performance tuning, hostname, timezone, kernel |
+| `packages` | Install, remove, update across apt/dnf/yum/pacman/zypper/apk |
+| `services` | Systemd units, cron jobs, logs, process control |
+| `users` | Accounts, groups, SSH keys, sudo, password policies |
+| `network` | Interfaces, routes, DNS, ports, connectivity |
+| `security` | Audits, fail2ban, SSH hardening, SELinux/AppArmor, SSL/TLS |
+| `files` | Read, write, upload, download files (text and binary) |
+| `firewall` | iptables, nftables, firewalld, ufw |
+| `docker` | Containers, images, compose, volumes, networks |
+| `nginx` | Server blocks, reverse proxy, SSL, load balancing |
+| `apache` | Virtual hosts, modules, SSL, configuration |
+| `mysql` | Databases, users, queries, backups, replication |
+| `postgresql` | Databases, roles, queries, backups, extensions |
+| `kubernetes` | Pods, deployments, services, logs, kubectl |
+| ...and more | Backup, certificates, git, DNS, VPN, LLM server, etc. |
+
+## Discovery & Management Tools
+
+| Tool | Description |
+|------|-------------|
+| `list_agents` | All servers with status, OS, health, groups |
+| `get_agent_info` | Detailed info for a single server |
+| `search_agents` | Filter by CPU/memory/disk, OS, status, group |
+| `search_inventory` | Search packages, services, containers across fleet |
+| `search_security` | Search security findings across fleet |
+| `run_security_audit` | Trigger a security audit on one or more servers |
+| `run_inventory_scan` | Trigger an inventory scan |
+| `get_task_status` | Check status of running/completed tasks |
+| `get_task_changes` | View file diffs from a task |
+| `revert_task` | Undo file changes from a previous task |
+| `send_email` | Send yourself a report or summary |
+
+## Portal
+
+<p align="center">
+  <img src="assets/portal.png" alt="ManageLM Portal — server management, health monitoring, command history" width="700">
+</p>
+
+## Self-Hosted
+
+Replace `app.managelm.com` with your own portal URL in the MCP configuration. See the [self-hosted guide](https://www.managelm.com/doc/) for Docker deployment.
 
 ## Requirements
 
-- **ManageLM Portal** — your hosted control plane ([managelm.com](https://www.managelm.com))
-- **ManageLM Agent** — installed on each managed Linux server
 - **Claude Code v1.0.33+** or Claude Desktop with MCP support
+- **ManageLM account** — [sign up free](https://app.managelm.com/register) (up to 10 agents)
+- **ManageLM Agent** — installed on each server you want to manage
+
+## Other Integrations
+
+ManageLM works with your favorite tools:
+
+- [VS Code Extension](https://github.com/managelm/vscode-extension) — `@managelm` in Copilot Chat
+- [ChatGPT Plugin](https://github.com/managelm/openai-gpt) — manage servers from ChatGPT
+- [n8n Plugin](https://github.com/managelm/n8n-plugin) — infrastructure automation workflows
+- [Slack Plugin](https://github.com/managelm/slack-plugin) — notifications and commands in Slack
+- [OpenClaw Plugin](https://github.com/managelm/openclaw-plugin) — OpenClaw integration
 
 ## Links
 
-- [ManageLM Website](https://www.managelm.com)
-- [Documentation](https://www.managelm.com/doc/)
-- [GitHub](https://github.com/managelm/claude-extension)
+- [Website](https://www.managelm.com)
+- [Full Documentation](https://www.managelm.com/plugins/claude.html)
+- [Portal](https://app.managelm.com)
 
 ## License
 
-[MIT](LICENSE)
+[Apache 2.0](LICENSE)
