@@ -16,7 +16,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # Load GitHub token from shared config
-TOKEN_FILE="$(dirname "$0")/../.github-token"
+TOKEN_FILE="$(dirname "$0")/../../.github-token"
 if [ -z "${GITHUB_TOKEN:-}" ] && [ -f "$TOKEN_FILE" ]; then
   source "$TOKEN_FILE"
 fi
