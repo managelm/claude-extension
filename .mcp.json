@@ -3,7 +3,7 @@
     "managelm": {
       "type": "url",
       "url": "${MCP_URL}",
-      "note": "Set MCP_URL to your ManageLM portal MCP endpoint, e.g. https://portal.example.com/mcp. Auth is handled via OAuth 2.0 PKCE — Claude will prompt you to authorize on first connection."
+      "note": "Set MCP_URL to your ManageLM portal MCP endpoint, e.g. https://app.managelm.com/mcp (SaaS) or https://portal.example.com/mcp (self-hosted). Auth is fully automatic: Claude self-registers via OAuth 2.0 Dynamic Client Registration (RFC 7591) and prompts you to sign in to your ManageLM account on first connection — no client_id/secret to copy."
     }
   }
 }

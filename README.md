@@ -59,10 +59,7 @@ Or add manually to `~/.claude/settings.json`:
 
 ### 2. Authenticate
 
-ManageLM uses **OAuth 2.0 with PKCE**. On first connection, Claude opens your browser to authorize access. You need:
-
-1. A [ManageLM account](https://app.managelm.com/register) (free for up to 10 agents)
-2. MCP credentials enabled (Portal > Settings > MCP & API)
+ManageLM uses **OAuth 2.0 with Dynamic Client Registration** (RFC 7591). On first connection, Claude self-registers as an OAuth client and opens your browser to authorize access — no client ID or secret to copy. All you need is a [ManageLM account](https://app.managelm.com/register) (free for up to 10 agents).
 
 ### 3. Use it
 
