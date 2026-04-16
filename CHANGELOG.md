@@ -2,6 +2,13 @@
 
 All notable changes to the ManageLM Claude extension will be documented in this file.
 
+## [1.0.2] - 2026-04-17
+
+### Changed
+
+- Zero-config authentication: the portal now supports OAuth 2.0 Dynamic Client Registration (RFC 7591), so Claude self-registers on first connection. No more copying a client ID / secret from the portal Settings page.
+- README updated to reflect the simplified one-step setup (sign in to ManageLM, done).
+
 ## [1.0.1] - 2026-04-06
 
 ### Added
