@@ -2,6 +2,12 @@
 
 All notable changes to the ManageLM Claude extension will be documented in this file.
 
+## [1.0.3] - 2026-05-11
+
+### Changed
+
+- Skills and docs updated to match the latest portal MCP tool surface: agent discovery is now part of `search_agents`, and `list_agent_skills` is now `get_agent_skills`.
+
 ## [1.0.2] - 2026-04-17
 
 ### Changed
