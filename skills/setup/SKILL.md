@@ -24,7 +24,7 @@ Guide the user through connecting Claude to their ManageLM portal:
 
 3. **Authentication**: ManageLM uses OAuth 2.0 with PKCE. On first connection, Claude will open a browser window for the user to authorize access. The user must have a ManageLM account with MCP credentials enabled (found in Settings > MCP Credentials).
 
-4. **Verify the connection**: After setup, use the `list_agents` tool to verify the connection works and show available servers.
+4. **Verify the connection**: After setup, use the `search_agents` tool to verify the connection works and show available servers.
 
 ## Troubleshooting
 

@@ -21,7 +21,7 @@ If the user cannot connect or gets authentication errors:
 
 If agents are not appearing or are shown as offline:
 
-- Use `list_agents` to check the current state of all agents.
+- Use `search_agents` (no args) to check the current state of all agents.
 - **No agents listed**: The user may not have enrolled any agents, or their account role restricts visibility.
 - **Agent offline**: The agent service may be stopped on the server. Ask the user to check `systemctl status managelm-agent` on the target server.
 - **Agent not responding**: Network issues between the agent and the portal. Check firewall rules and outbound connectivity from the agent.
@@ -32,7 +32,7 @@ If tasks are failing or returning errors:
 
 - Use `get_task_status` with the task ID to check the detailed status and error message.
 - Use `get_task_history` to see recent tasks for the agent and identify patterns.
-- **Skill not available**: Use `list_agent_skills` to verify the required skill is assigned to the agent.
+- **Skill not available**: Use `get_agent_skills` to verify the required skill is assigned to the agent.
 - **Permission denied**: The agent may lack the OS-level permissions to perform the action.
 - **Timeout**: File transfer tasks have a 300s timeout; regular tasks have a 30s timeout. Large operations may need to be broken into smaller steps.
 

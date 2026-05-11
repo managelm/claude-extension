@@ -112,9 +112,8 @@ Every task dispatched to an agent is cryptographically signed (Ed25519). Agents 
 
 | Tool | Description |
 |------|-------------|
-| `list_agents` | All servers with status, OS, health, groups |
+| `search_agents` | List all servers (status, OS, health, groups) or filter by CPU/memory/disk, OS, status, group |
 | `get_agent_info` | Detailed info for a single server |
-| `search_agents` | Filter by CPU/memory/disk, OS, status, group |
 | `search_inventory` | Search packages, services, containers across fleet |
 | `search_security` | Search security findings across fleet |
 | `run_security_audit` | Trigger a security audit on one or more servers |
