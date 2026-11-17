@@ -1,0 +1,29 @@
+{
+  "name": "managelm",
+  "displayName": "ManageLM",
+  "description": "Manage Linux and Windows servers from Claude through ManageLM: run tasks, scans and fleet searches, transfer files, review and revert changes, with your own ManageLM permissions.",
+  "version": "1.0.0",
+  "author": {
+    "name": "ManageLM",
+    "email": "info@managelm.com",
+    "url": "https://www.managelm.com"
+  },
+  "homepage": "https://www.managelm.com",
+  "documentationUrl": "https://www.managelm.com/plugins/claude.html",
+  "supportUrl": "https://www.managelm.com/#contact",
+  "privacyPolicyUrl": "https://www.managelm.com/legal/privacy.html",
+  "termsOfServiceUrl": "https://www.managelm.com/terms.html",
+  "repository": "https://github.com/managelm/claude-plugin",
+  "license": "Apache-2.0",
+  "icon": "./assets/icon.png",
+  "keywords": [
+    "server-management",
+    "linux",
+    "windows",
+    "infrastructure",
+    "devops",
+    "sysadmin",
+    "security",
+    "mcp"
+  ]
+}

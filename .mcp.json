@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "managelm": {
+      "type": "http",
+      "url": "https://app.managelm.com/mcp"
+    }
+  }
+}
